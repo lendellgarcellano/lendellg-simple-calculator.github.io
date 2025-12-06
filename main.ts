@@ -3,20 +3,20 @@ const buttons = document.querySelectorAll(".btn");
 
 let currentExpression = "";
 
-buttons.forEach(button => {
-  button.addEventListener("click", () => {
-    const value = (button as HTMLElement).getAttribute("data-val");
+buttons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    const val = btn.getAttribute("data-val");
 
-    if (button.id === "clear") {
+    if (btn.id === "clear") {
       currentExpression = "";
       display.value = "";
       return;
     }
 
-    if (button.id === "equal") {
+    if (btn.id === "equal") {
       try {
-        const result = eval(currentExpression);
-        display.value = result.toString();
+        const result = Function(`return (${currentExpression})`)();
+        display.value = result;
         currentExpression = result.toString();
       } catch {
         display.value = "Error";
@@ -25,8 +25,8 @@ buttons.forEach(button => {
       return;
     }
 
-    if (value) {
-      currentExpression += value;
+    if (val) {
+      currentExpression += val;
       display.value = currentExpression;
     }
   });
